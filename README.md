@@ -1,65 +1,17 @@
-# Flask App Backend Project
+# Bitcoin Flask Dashboard
 
-The goal of this project is to showcase a simple implementation of the backend of a system which:
+The goal of this project is to build a simple dashboard showing a live updating BTC futures curve, live chart of BTC perpetual price, and a table of the open interest in different BTC futures contracts.
 
-- receives a POST request in JSON format
-- validates contents of the JSON
-- performs mathematical operations on provided data
-- returns result of operation, or error
+Data is sourced from Deribit, accessed via an asynchronous websocket for live data and via API calls for open interest.
 
-Further, assume request takes following format:
-```
-request_JSON =  {"operation_type": "mean", "data": [1, 2, 3], "metadata": "free_text"}
-```
-This app could be extended to take different types of data e.g. csv as base64 in the data field or string of a list of numbers in metadata field.
+Figures are visualised using DASH to quickly mock up a simple dashboard with multiple tabs.
 
-# How to run the API
-## Prerequisities 
-1. `docker`  
-2. `docker-compose`
+# How to run the dashboard
 
-## Start up Docker
-This starts our container and runs tests on first run
-```shell
-docker compose up --build
-```
-Once the app is running, you can test it using the requests given in 'Test Requests' below
-## Shut Down
-```shell
-docker compose down
-```
+Download the btc_futures_dashboard.py file and run using terminal or your preferred IDE.
 
-# Test Requests
-These requests can be run in a seperate terminal instance. 
+The dashboard should run locally on http://0.0.0.0:8080/ which is accessable through your browser.
 
-#### For a mathematical operation
-Simply edit the data field or the operation_type field to test different outputs or see error codes.
-```shell
-curl localhost:9000/operation -d '{"operation_type": "mean", "data": [1, 200, 3], "metadata": "free_text"}' -H 'Content-Type: application/json' -X POST
-```
-This request should return an error as we have a string in the data field
-```shell 
-curl localhost:9000/operation -d '{"operation_type": "mean", "data": [1, "200", 3], "metadata": "free_text"}' -H 'Content-Type: application/json' -X POST
-```
-
-#### For a health check 
-```shell
-curl localhost:9000/healthcheck -X  GET
-```
-This can also be tested by going to localhost:9000/healthcheck in your browser
-
-
-
-## Testing locally - This will only work on MacOS, not recommended on Windows
-1. `pip install pipenv`
-2. `cd backend_implementation` 
-3. `pipenv --python 3.9` #Creates Python 3.9 virtual env
-4. `pipenv install -r requirements.txt` #Installs all dependencies 
-5. `pipenv shell` #Activates virtual env
-6. `pytest ` #Runs all tests on app - will fail on Windows
-
-## Prerequisities
-1. Local Python interpreter
-
+To stop the app from running use control+command+c on macOS or control+alt+c on windows
 
 
